@@ -22,6 +22,15 @@ async function createUser(email, password) {
   return data;
 }
 
+/**
+ * 2.1: Sending signup requests from the frontend.
+ * We will send users credentials, so users can signup to our API endpoint we created
+ * in the previous lecture.
+ * 
+ * 
+ * If you want to see how the sign up page looks and works run the app or check 
+ * the word document "6-Sending signup requests from the frontend".
+ */
 function AuthForm() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -36,11 +45,17 @@ function AuthForm() {
   async function submitHandler(event) {
     event.preventDefault();
 
+    /**
+     * Remember that to get the input values we can either use "useState" and listen
+     * to "onChange" events or we can just "useRef" to get the value right when the
+     * users "submits" the form.
+     */
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
     // optional: Add validation
 
+    // Login the user is we are in "login" mode, else create the user.
     if (isLogin) {
       const result = await signIn('credentials', {
         redirect: false,
