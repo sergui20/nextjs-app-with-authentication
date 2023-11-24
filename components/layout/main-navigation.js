@@ -39,6 +39,16 @@ function MainNavigation() {
   // The "loading" value tells use whether Nextjs is figuring out whether a user is logged in or not.
   const [session, loading] = useSession();
 
+  /**
+   * 6.1: Adding logout functionality.
+   * It is very easy log users out by simply using "signOut" from "next-auth/client".
+   * 
+   * "signOut" returns a promise, telling us when it's done. However, here we don't 
+   * even care about that because, since we are using "useSession", this  
+   * MainNavigation component will be updated automatically anyway as soon as the 
+   * active session changes. It will change when we sign out, and Next.js will then 
+   * clear that cookie and remove the information that the active user is logged in.
+   */
   function logoutHandler() {
     signOut();
   }
