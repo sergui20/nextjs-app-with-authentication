@@ -55,10 +55,40 @@ function AuthForm() {
 
     // optional: Add validation
 
-    // Login the user is we are in "login" mode, else create the user.
+    /**
+     * 4.1: Sending sign-in request from the frontend.
+     * 
+     * Now that we have the API route for logging users in. We can wire up the 
+     * front-end AuthForm with the login endpoint. Well, here we need to sign 
+     * the user in. We don't really need to send an HTTP request. We don't need
+     * to configure it ourselves. And we shouldn't. Instead, let's import from 
+     * "next-auth/client" and from there, we can import the "signIn" function. 
+     * This "signIn" function is a function that we can call in our component to 
+     * send a "signIn" request. The request will be sent automatically. The first 
+     * argument describes the provider with which we want to "signIn". Remember we
+     * could have multiple providers in the same application. For our case, it's the
+     * credentials provider. Then we can also pass a second argument,a configuration
+     * object where we can configure how the "signIn" process should work. Specifically,
+     * we can add a redirect field and set it to false. You might remember that we 
+     * said that when "next-auth" is used on the back-end and we throw an error 
+     * because the authentication failed or something, by default, Next.js would 
+     * redirect us to another page, to an error page. To avoid this, we can set 
+     * the redirect option to false. If we want to handle the error on the same page 
+     * and display a custom error message, we can set up the error handling logic 
+     * accordingly. So, let's just show the error in the same page.
+     * 
+     * Now, when setting redirect to false, "signIn" will actually return a promise 
+     * which eventually yields us our result. The promise will always resolve, it 
+     * will never be rejected. Even if we have an error in our back-end authentication
+     * code, the result would be an object that contains information about the error. 
+     * If we have no error during authentication, the result is still an object, 
+     * but without the error information. So, this will never throw an error, it will 
+     * never be rejected.
+     */
     if (isLogin) {
       const result = await signIn('credentials', {
         redirect: false,
+        // If you remember in "[...nextauth].js" we are getting "email" and "password" from the payload.
         email: enteredEmail,
         password: enteredPassword,
       });
