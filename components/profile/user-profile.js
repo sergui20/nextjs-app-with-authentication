@@ -1,6 +1,17 @@
 import ProfileForm from './profile-form';
 import classes from './user-profile.module.css';
 
+/**
+ * 8.2: Adding server-side route protection to pages.
+ * 
+ * Now that we use "getServerSideProps". And that means we can now get rid of our 
+ * client-side code. Now, this component will only be rendered if that page renders. 
+ * And that page will only render if we are authenticated because of our 
+ * "getServerSideProps" logic. And that might be the more elegant way of handling 
+ * this because with this, if we save that, if I'm not logged in and I then visit 
+ * /profile I don't even see the profile page flashing. Instead, I'm instantly 
+ * redirected. We are now not showing the loader.
+ */
 function UserProfile() {
   // const [isLoading, setIsLoading] = useState(true);
 
