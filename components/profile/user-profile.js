@@ -29,6 +29,12 @@ function UserProfile() {
   //   return <p className={classes.profile}>Loading...</p>;
   // }
 
+  /**
+   * 12.2: Wiring up the 'Change password' form to their endpoint.
+   * 
+   * Here is our 'change password' handler, which as we said sends a PATCH request
+   * to the change password endpoint.
+   */
   async function changePasswordHandler(passwordData) {
     const response = await fetch('/api/user/change-password', {
       method: 'PATCH',
@@ -40,6 +46,8 @@ function UserProfile() {
 
     const data = await response.json();
 
+    // You could add more feedback to the user, like a loader or success message or
+    // sommething, but we just wanted to check if our logic works.
     console.log(data);
   }
 

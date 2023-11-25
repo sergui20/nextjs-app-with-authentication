@@ -2,6 +2,17 @@ import { useRef } from 'react';
 
 import classes from './profile-form.module.css';
 
+/**
+ * 12.1: Wiring up the 'Change password' form to their endpoint.
+ * 
+ * We need to handle the form submission and extract the old and new passwords and
+ * send an HTTP PATCH request to the 'Change Password' endpoint.
+ * 
+ * For, getting the input values we could have used "useState", but we better decided
+ * to use "useRef".
+ * 
+ * We are going to send the request in the parent instead of here.
+ */
 function ProfileForm(props) {
   const oldPasswordRef = useRef();
   const newPasswordRef = useRef();
