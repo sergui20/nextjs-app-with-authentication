@@ -93,6 +93,24 @@ function AuthForm() {
         password: enteredPassword,
       });
 
+      /**
+       * 9.1: Protecting the "Auth" page.
+       * 
+       * Now let's start with the redirecting after logging in successfully. Here, 
+       * if we don't have an error (signed in succeessfully), then redirect. Now we 
+       * could again redirect with "window.location.href", but that basically resets 
+       * the entire application. That is fine for an initial page load but if we already
+       * worked in this application, and we have state already going on, then we 
+       * probably don't wanna reset the entire application and lose all our state. 
+       * So, therefore, instead for redirecting, the better way of doing that is by 
+       * using Next router. And then in our component we simply call "useRouter" to get 
+       * access to the router. And then, we can simply call "replace". And "replace" 
+       * will basically redirect us. It will replace the current URL with a different 
+       * one.
+       * 
+       * So, test this, first login and then verify if you are redirected to the profile
+       * page.
+       */
       if (!result.error) {
         // set some auth state
         router.replace('/profile');
