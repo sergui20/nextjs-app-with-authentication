@@ -42,6 +42,7 @@ async function handler(req, res) {
     return;
   }
 
+  // Thankfully, we included the user email in the token, so we can easily get it from the session.
   const userEmail = session.user.email;
   const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
@@ -63,6 +64,9 @@ async function handler(req, res) {
   const passwordsAreEqual = await verifyPassword(oldPassword, currentPassword);
 
   if (!passwordsAreEqual) {
+    // 403 means that you are "authenticated", but not "authorized" for this operation.
+    // Unlike the 401 we used above, which means that the user is not "authenticated".
+    // Or we could use a 422 which indicates that the user input is incorrect, that could be a fair assumption as well, but we will go with 403.
     res.status(403).json({ message: 'Invalid password.' });
     client.close();
     return;
@@ -72,7 +76,7 @@ async function handler(req, res) {
 
   const result = await usersCollection.updateOne(
     { email: userEmail },
-    { $set: { password: hashedPassword } }
+    { $set: { password: hashedPassword } } // "$set" is an operation understood by MongoDB to set the properties of a document that should change. 
   );
 
   client.close();
